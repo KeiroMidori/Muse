@@ -52,6 +52,17 @@ class PlayerViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: Audio Management
     
+    func trackEnd() {
+        for cell in trackQueueCollectionView.visibleCells() {
+            var indexPath = trackQueueCollectionView.indexPathForCell(cell as! UICollectionViewCell)
+            if ((indexPath!.row + 1) < trackListArray.count) {
+                let newIndexPath = NSIndexPath(forRow: indexPath!.row + 1, inSection: indexPath!.section)
+                trackQueueCollectionView.selectItemAtIndexPath(newIndexPath, animated: true, scrollPosition: UICollectionViewScrollPosition.CenteredHorizontally)
+                updateUIWithTrack(newIndexPath.row)
+            }
+        }
+    }
+    
     func playTrackWithID(trackID: Int) {
         if (trackListArray.count != 0) {
             let track = trackListArray.objectAtIndex(trackID) as! Track
@@ -142,12 +153,7 @@ class PlayerViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     @IBAction func nextButtonTouched(sender: AnyObject) {
-        for cell in trackQueueCollectionView.visibleCells() {
-            var indexPath = trackQueueCollectionView.indexPathForCell(cell as! UICollectionViewCell)
-            let newIndexPath = NSIndexPath(forRow: indexPath!.row + 1, inSection: indexPath!.section)
-            trackQueueCollectionView.selectItemAtIndexPath(newIndexPath, animated: true, scrollPosition: UICollectionViewScrollPosition.CenteredHorizontally)
-            updateUIWithTrack(newIndexPath.row)
-        }
+        trackEnd()
     }
     
     @IBAction func menuButtonTouched(sender: AnyObject) {
