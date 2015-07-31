@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F8A6E7EE-58B0-4EA9-B9B6-3D248D414D87</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Muse</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>77F0FDB952CBF0E4B5544921CB3F04D52B9C6CC6</key>
+		<string>github.com:KeiroMidori/Muse.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Muse.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>77F0FDB952CBF0E4B5544921CB3F04D52B9C6CC6</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:KeiroMidori/Muse.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>77F0FDB952CBF0E4B5544921CB3F04D52B9C6CC6</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>77F0FDB952CBF0E4B5544921CB3F04D52B9C6CC6</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Muse</string>
+		</dict>
+	</array>
+</dict>
+</plist>
