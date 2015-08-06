@@ -9,6 +9,7 @@
 import UIKit
 import Kingfisher
 
+
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet var trackCoverImageView: UIImageView!
@@ -35,6 +36,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         obstacleViews.append(trackArtistLabel)
         obstacleViews.append(trackTitleLabel)
         obstacleViews.append(trackCoverImageView)
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -135,6 +137,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
 
     // MARK: UICollectionView Protocols methods
+    
+    
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+            if (UIScreen.mainScreen().scale > 2.9) {
+                return UIEdgeInsetsMake(10, 25, 70, 25)
+            }
+            return UIEdgeInsetsMake(10, 11, 70, 11)
+    }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if radioArray.count != 0 {
