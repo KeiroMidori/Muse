@@ -135,6 +135,7 @@ class PlayerViewController: UIViewController, UICollectionViewDelegate, UICollec
             playTrackWithID(trackID)
         }
         else {
+            shouldShowPlayer = false
             var theIndexOfTrack = 0
             for (index, t) in enumerate(trackListArray) {
                 let tt = t as! Track
