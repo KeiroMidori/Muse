@@ -15,7 +15,7 @@ class AnimatedLoaderImageView: UIImageView {
         
         var loaderImagesArray = NSMutableArray(capacity: 0)
         for (var i = 1; i <= 40; i++) {
-            loaderImagesArray.addObject(UIImage(named: "loader_\(i).png")!)
+            loaderImagesArray.addObject(UIImage(named: "\(i).png")!)
         }
         self.animationImages = loaderImagesArray as [AnyObject]
         self.animationDuration = 3
