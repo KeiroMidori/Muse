@@ -112,6 +112,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             var itemRadio = Radio(radioID: rID.integerValue, label: rLbl, itemCount: rICnt.integerValue, img: rImg)
             radioArray.addObject(itemRadio)
         }
+        radioArray.addObjectsFromArray(radioArray as [AnyObject])
         tracksCollectionView.reloadData()
     }
     
