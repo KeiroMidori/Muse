@@ -19,6 +19,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet var tracksCollectionView: UICollectionView!
     var radioArray = NSMutableArray(capacity: 0)
     var loaderImageView: AnimatedLoaderImageView?
+    var obstacleViews : [UIView] = []
+    var shouldJustShowPlayer = false
     override func viewDidLoad() {
         super.viewDidLoad()
         tracksCollectionView.delegate = self
@@ -30,6 +32,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.view.addSubview(loaderImageView!)
         loaderImageView?.show()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("didDismissSecondViewController"), name: "playerDissmissed", object: nil)
+        obstacleViews.append(trackArtistLabel)
+        obstacleViews.append(trackTitleLabel)
+        obstacleViews.append(trackCoverImageView)
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -58,7 +63,30 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             updateBottomBarView()
         }
     }
-
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        testTouches(touches)
+    }
+    
+    func testTouches(touches: NSSet!) {
+        // Get the first touch and its location in this view controller's view coordinate system
+        let touch = touches.allObjects[0] as! UITouch
+        let touchLocation = touch.locationInView(self.view)
+        
+        for obstacleView in obstacleViews {
+            // Convert the location of the obstacle view to this view controller's view coordinate system
+            let obstacleViewFrame = self.view.convertRect(obstacleView.frame, fromView: obstacleView.superview)
+            
+            // Check if the touch is inside the obstacle view
+            if CGRectContainsPoint(obstacleViewFrame, touchLocation) {
+                // Touched bottom bar !
+                shouldJustShowPlayer = true
+                performSegueWithIdentifier("playTrack", sender: nil)
+            }
+        }
+    }
+    
+    
     @IBAction func playPauseButtonTouched(sender: AnyObject) {
         if (AudioPlayerManager.sharedInstance.isTrackPlaying()) {
             AudioPlayerManager.sharedInstance.pausePlayer()
@@ -136,10 +164,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         var segueID = segue.identifier
         if(segueID! == "playTrack"){
             var playerViewController = segue.destinationViewController as! PlayerViewController
-            let cell = sender as! UICollectionViewCell
-            let indexPath = tracksCollectionView.indexPathForCell(cell)
-            if (radioArray.count != 0) {
-                playerViewController.radio = radioArray.objectAtIndex(indexPath!.row) as? Radio
+            if let cell = sender as? UICollectionViewCell {
+                let indexPath = tracksCollectionView.indexPathForCell(cell)
+                if (radioArray.count != 0) {
+                    playerViewController.radio = radioArray.objectAtIndex(indexPath!.row) as? Radio
+                }
+            }
+            else {
+                if (shouldJustShowPlayer) {
+                    let track = AudioPlayerManager.sharedInstance.getPlayingTrack() as Track
+                    playerViewController.shouldShowPlayer = true
+                    playerViewController.playerShouldShowTrackWithURL = track.trackURL
+                    playerViewController.radio = track.trackRadio
+                }
             }
         }
     }

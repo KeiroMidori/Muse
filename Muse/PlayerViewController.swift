@@ -25,6 +25,8 @@ class PlayerViewController: UIViewController, UICollectionViewDelegate, UICollec
     var trackListArray = NSMutableArray(capacity: 0)
     var loaderImageView: AnimatedLoaderImageView?
     var player = AVPlayer()
+    var shouldShowPlayer: Bool = false
+    var playerShouldShowTrackWithURL: String!
     override func viewDidLoad() {
         super.viewDidLoad()
         trackQueueCollectionView.delegate = self
@@ -129,7 +131,34 @@ class PlayerViewController: UIViewController, UICollectionViewDelegate, UICollec
             trackArtistLabel.text = track.trackArtist
             trackTitleLabel.text = track.trackTitle
         }
-        playTrackWithID(trackID)
+        if (!shouldShowPlayer) {
+            playTrackWithID(trackID)
+        }
+        else {
+            var theIndexOfTrack = 0
+            for (index, t) in enumerate(trackListArray) {
+                let tt = t as! Track
+                if (tt.trackURL == playerShouldShowTrackWithURL) {
+                    theIndexOfTrack = index
+                }
+                let newIndexPath = NSIndexPath(forRow: theIndexOfTrack, inSection: 0)
+                trackQueueCollectionView.selectItemAtIndexPath(newIndexPath, animated: true, scrollPosition: UICollectionViewScrollPosition.CenteredHorizontally)
+                let track = trackListArray.objectAtIndex(newIndexPath.row) as! Track
+                trackArtistLabel.text = track.trackArtist
+                trackTitleLabel.text = track.trackTitle
+                let length = secondsToHoursMinutesSeconds(track.trackLength)
+                var minutes = "\(length.1)"
+                var seconds = "\(length.2)"
+                if length.1 < 10 {
+                    minutes = "0\(length.1)"
+                }
+                if length.2 < 10 {
+                    seconds = "0\(length.2)"
+                }
+                timerLabel.text = "\(minutes):\(seconds)"
+                playPauseButton.setImage(UIImage(named: "pause"), forState: UIControlState.Normal)
+            }
+        }
     }
     
     @IBAction func volumeSliderMoved(sender: AnyObject) {
